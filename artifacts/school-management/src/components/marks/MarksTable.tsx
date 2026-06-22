@@ -45,6 +45,28 @@ export const MarksTable: React.FC<MarksTableProps> = ({ selection, academicYear,
   const [newGrade, setNewGrade] = useState({ grade: "", min: "", max: "", color: "#7c3aed" });
   const tableRef = useRef<HTMLDivElement>(null);
 
+  // Draft strings for min/max inputs so users can clear/retype freely without 0 snapping back
+  const [ruleInputs, setRuleInputs] = useState<Record<string, string>>({});
+
+  const ruleInputVal = (idx: number, field: "min" | "max") => {
+    const key = `${idx}_${field}`;
+    return key in ruleInputs ? ruleInputs[key] : String(gradingRules[idx]?.[field] ?? 0);
+  };
+
+  const onRuleChange = (idx: number, field: "min" | "max", raw: string) => {
+    if (/^\d*$/.test(raw)) // only digits (or empty)
+      setRuleInputs(prev => ({ ...prev, [`${idx}_${field}`]: raw }));
+  };
+
+  const onRuleBlur = (idx: number, field: "min" | "max") => {
+    const key = `${idx}_${field}`;
+    const raw = ruleInputs[key] ?? String(gradingRules[idx]?.[field] ?? 0);
+    const num = parseInt(raw, 10);
+    const clamped = isNaN(num) ? 0 : Math.min(Math.max(num, 0), totalMarks);
+    updateRule(idx, field, clamped);
+    setRuleInputs(prev => { const n = { ...prev }; delete n[key]; return n; });
+  };
+
   const handleLoadTests = () => {
     const num = parseInt(inputNumTests);
     if (!isNaN(num) && num > 0) setNumTestsConfig(num);
@@ -255,17 +277,21 @@ export const MarksTable: React.FC<MarksTableProps> = ({ selection, academicYear,
               </label>
               {/* Min */}
               <input
-                type="number" min={0} max={totalMarks}
+                type="text"
+                inputMode="numeric"
                 className="w-9 text-center font-semibold outline-none py-1 focus:bg-indigo-50"
-                value={rule.min}
-                onChange={e => updateRule(idx, "min", Math.min(parseInt(e.target.value) || 0, totalMarks))}
+                value={ruleInputVal(idx, "min")}
+                onChange={e => onRuleChange(idx, "min", e.target.value)}
+                onBlur={() => onRuleBlur(idx, "min")}
               />
               <span className="text-gray-400 text-[10px]">–</span>
               <input
-                type="number" min={0} max={totalMarks}
+                type="text"
+                inputMode="numeric"
                 className="w-9 text-center font-semibold outline-none py-1 border-r border-[#d1d5f0] focus:bg-indigo-50"
-                value={rule.max}
-                onChange={e => updateRule(idx, "max", Math.min(parseInt(e.target.value) || 0, totalMarks))}
+                value={ruleInputVal(idx, "max")}
+                onChange={e => onRuleChange(idx, "max", e.target.value)}
+                onBlur={() => onRuleBlur(idx, "max")}
               />
               <button
                 onClick={() => removeRule(idx)}
