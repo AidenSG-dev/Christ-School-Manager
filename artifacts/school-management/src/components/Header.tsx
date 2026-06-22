@@ -21,14 +21,17 @@ export const Header: React.FC<HeaderProps> = ({
   const tabs = ["Student Info", "Marks Registry", "Lesson Plan"];
 
   return (
-    <header className="bg-secondary text-primary-foreground h-14 flex items-center px-4 shrink-0 justify-between">
+    <header className="bg-secondary text-primary-foreground h-20 flex items-center px-5 shrink-0 justify-between gap-6">
       <div className="flex items-center gap-4">
         <button className="md:hidden p-1" onClick={toggleSidebar}>
-          <Menu className="w-5 h-5 text-white" />
+          <Menu className="w-6 h-6 text-white" />
         </button>
         <div className="flex items-center gap-3">
-          <img src={schoolLogo} alt="Logo" className="h-10 w-10 object-contain" />
-          <h1 className="text-xl font-bold tracking-wider" style={{ fontFamily: '"Times New Roman", Times, serif' }}>
+          <img src={schoolLogo} alt="Christ School Logo" className="h-12 w-12 object-contain" />
+          <h1
+            className="text-3xl font-bold tracking-widest text-white leading-none"
+            style={{ fontFamily: '"Times New Roman", Times, serif' }}
+          >
             CHRIST SCHOOL
           </h1>
         </div>
@@ -36,9 +39,9 @@ export const Header: React.FC<HeaderProps> = ({
 
       <div className="flex items-center gap-8">
         <div className="flex items-center gap-2">
-          <label className="text-sm font-semibold text-gray-200">Academic Year</label>
+          <label className="text-sm font-semibold text-blue-100 whitespace-nowrap">Academic Year</label>
           <select
-            className="bg-primary border border-border text-white text-sm px-2 py-1 outline-none focus:border-accent"
+            className="bg-primary border border-blue-300/40 text-white text-sm px-3 py-1.5 outline-none focus:border-accent cursor-pointer"
             value={academicYear || "Select Year"}
             onChange={(e) => setAcademicYear(e.target.value === "Select Year" ? "" : e.target.value)}
           >
@@ -46,7 +49,7 @@ export const Header: React.FC<HeaderProps> = ({
           </select>
         </div>
 
-        <nav className="hidden md:flex items-center gap-1 h-full">
+        <nav className="hidden md:flex items-center gap-1 h-20">
           {tabs.map(tab => {
             const isActive = activeTab === tab;
             const isDisabled = !academicYear;
@@ -55,9 +58,9 @@ export const Header: React.FC<HeaderProps> = ({
                 key={tab}
                 disabled={isDisabled}
                 onClick={() => setActiveTab(tab)}
-                className={`h-14 px-4 text-sm font-bold transition-colors ${
-                  isDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-primary'
-                } ${isActive ? 'border-b-2 border-accent text-white' : 'text-gray-300'}`}
+                className={`h-20 px-5 text-sm font-bold tracking-wide transition-colors ${
+                  isDisabled ? 'opacity-40 cursor-not-allowed text-blue-200' : 'cursor-pointer hover:bg-primary/60 text-blue-100'
+                } ${isActive ? 'border-b-[3px] border-white text-white bg-primary/40' : ''}`}
               >
                 {tab}
               </button>

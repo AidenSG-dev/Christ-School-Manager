@@ -82,10 +82,9 @@ export const StudentTable: React.FC<StudentTableProps> = ({ activeClass, academi
     if (field === "Birth Date") return student.birthDate || "";
     if (field === "Address") return student.address || "";
     if (field === "Mother/Father No.") return student.parentPhone || "";
-    return student[field] || "";
+    return (student[field] as string) || "";
   };
 
-  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!tableRef.current) return;
@@ -94,15 +93,12 @@ export const StudentTable: React.FC<StudentTableProps> = ({ activeClass, academi
       
       const r = parseInt(target.getAttribute("data-row") || "-1");
       const c = parseInt(target.getAttribute("data-col") || "-1");
-      
       if (r === -1 || c === -1) return;
 
-      let nextR = r;
-      let nextC = c;
-
+      let nextR = r, nextC = c;
       if (e.key === "ArrowDown") nextR += 1;
       else if (e.key === "ArrowUp") nextR -= 1;
-      else if (e.key === "ArrowRight") nextC += 1;
+      else if (e.key === "ArrowRight" || e.key === "Tab") { if (!e.shiftKey) nextC += 1; else return; }
       else if (e.key === "ArrowLeft") nextC -= 1;
       else return;
 
@@ -121,7 +117,10 @@ export const StudentTable: React.FC<StudentTableProps> = ({ activeClass, academi
     return (
       <div className="flex-1 flex items-center justify-center bg-white m-4 border border-border">
         <div className="text-center p-8 bg-gray-50 border border-gray-200 shadow-sm max-w-sm w-full">
-          <h3 className="font-bold text-lg mb-4 text-primary">Initialize Class Roster</h3>
+          <h3 className="font-bold text-lg mb-1 text-primary">Initialize Class Roster</h3>
+          <p className="text-sm text-gray-500 mb-4">
+            Class {activeClass.name} – Section {activeClass.section}
+          </p>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-bold text-left mb-1">Number of students?</label>
@@ -130,14 +129,16 @@ export const StudentTable: React.FC<StudentTableProps> = ({ activeClass, academi
                 className="w-full border border-border p-2 focus:border-accent outline-none"
                 value={numStudents}
                 onChange={e => setNumStudents(e.target.value)}
+                onKeyDown={e => e.key === "Enter" && handleGenerate()}
                 min="1"
+                autoFocus
               />
             </div>
             <button 
               onClick={handleGenerate}
               className="w-full bg-primary text-white font-bold py-2 hover:bg-secondary transition-colors"
             >
-              Generate
+              Generate Roster
             </button>
           </div>
         </div>
@@ -147,42 +148,44 @@ export const StudentTable: React.FC<StudentTableProps> = ({ activeClass, academi
 
   return (
     <div className="flex flex-col h-full overflow-hidden bg-white">
-      {/* Control Row */}
-      <div className="p-4 border-b border-border flex justify-between items-center bg-gray-50 shrink-0">
-        <div className="font-bold text-lg text-primary tracking-tight">
-          Class: {activeClass.name} <span className="mx-2 text-gray-300">|</span> Section: {activeClass.section}
+      {/* Control Row — fixed height to match sidebar header */}
+      <div className="h-14 px-4 border-b border-border flex justify-between items-center bg-gray-50 shrink-0">
+        <div className="font-bold text-base text-primary tracking-tight">
+          Class: {activeClass.name}
+          <span className="mx-2 text-gray-300">|</span>
+          Section: {activeClass.section}
         </div>
         <div className="flex gap-2">
           <button 
             onClick={() => setIsColModalOpen(true)}
             className="px-3 py-1.5 border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-colors text-sm"
           >
-            [+ Add Column]
+            + Add Column
           </button>
           <button 
             onClick={handleAddStudent}
             className="px-3 py-1.5 bg-primary text-white font-bold hover:bg-secondary transition-colors text-sm"
           >
-            [+ Add Student]
+            + Add Student
           </button>
         </div>
       </div>
 
-      {/* Table Area */}
-      <div className="flex-1 overflow-auto p-4" ref={tableRef}>
-        <table className="w-full border-collapse bg-white table-fixed">
+      {/* Scrollable Table — horizontal scroll stays within this wrapper; sidebar is unaffected */}
+      <div className="flex-1 overflow-auto" ref={tableRef}>
+        <table className="border-collapse bg-white" style={{ minWidth: "100%" }}>
           <thead>
             <tr>
-              <th className="excel-header w-16 text-center border-r border-gray-600">Rl. No</th>
+              <th className="excel-header w-16 text-center sticky left-0 z-10 border-r border-blue-300/40">Rl. No</th>
               {columns.map(col => (
-                <th key={col} className="excel-header border-r border-gray-600">{col}</th>
+                <th key={col} className="excel-header border-r border-blue-300/40">{col}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {students.map((student, rIndex) => (
-              <tr key={student.id} className="hover:bg-blue-50/30">
-                <td className="excel-cell bg-gray-50 text-center font-semibold text-gray-600">
+              <tr key={student.id} className="hover:bg-blue-50/40">
+                <td className="excel-cell bg-gray-50 text-center font-semibold text-gray-600 sticky left-0 z-10 border-r border-border">
                   {student.rollNo}
                 </td>
                 {columns.map((col, cIndex) => (
@@ -203,18 +206,18 @@ export const StudentTable: React.FC<StudentTableProps> = ({ activeClass, academi
         </table>
       </div>
 
-      {/* Column Modal */}
       {isColModalOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white p-6 shadow-xl w-80 border-t-4 border-primary">
-            <h3 className="font-bold text-lg mb-4">Add Column</h3>
+            <h3 className="font-bold text-lg mb-4">Add Custom Column</h3>
             <div>
-              <label className="block text-sm font-bold mb-1">Column Name</label>
+              <label className="block text-sm font-bold mb-1">Column Header Name</label>
               <input 
                 type="text"
                 className="w-full border border-border p-2 focus:border-accent outline-none"
                 value={newColName}
                 onChange={e => setNewColName(e.target.value)}
+                onKeyDown={e => e.key === "Enter" && handleAddColumn()}
                 autoFocus
               />
             </div>

@@ -51,32 +51,34 @@
 :root {
   --app-font-sans: 'Inter', sans-serif;
   
-  /* HSL Values for theme */
   --background: 210 20% 98%;
   --foreground: 220 30% 10%;
   
-  --border: 220 20% 85%;
-  --input: 220 20% 85%;
-  --ring: 217 91% 60%;
+  --border: 220 20% 82%;
+  --input: 220 20% 82%;
+  --ring: 213 72% 44%;
   
   --card: 0 0% 100%;
   --card-foreground: 220 30% 10%;
-  --card-border: 220 20% 85%;
+  --card-border: 220 20% 82%;
   
   --popover: 0 0% 100%;
   --popover-foreground: 220 30% 10%;
-  --popover-border: 220 20% 85%;
-  
-  --primary: 211 49% 23%; /* #1a3a5c */
+  --popover-border: 220 20% 82%;
+
+  /* Lighter corporate blue — used for all blue UI (header, table headers, buttons) */
+  --primary: 213 72% 44%;
   --primary-foreground: 0 0% 100%;
   
-  --secondary: 215 28% 17%; /* #0f2744 */
+  /* Slightly deeper shade for sidebar/table headers */
+  --secondary: 213 68% 37%;
   --secondary-foreground: 0 0% 100%;
   
   --muted: 220 14% 96%;
   --muted-foreground: 220 10% 40%;
   
-  --accent: 217 91% 60%; /* #3b82f6 */
+  /* Sky-blue accent for focus borders and highlights */
+  --accent: 200 85% 52%;
   --accent-foreground: 0 0% 100%;
   
   --destructive: 0 84% 60%;
@@ -99,9 +101,9 @@
 }
 
 .excel-cell {
-  @apply p-0 border border-border min-w-[100px];
+  @apply p-0 border border-border min-w-[120px];
 }
 
 .excel-header {
-  @apply bg-secondary text-primary-foreground text-sm font-semibold p-2 border border-secondary text-left;
+  @apply bg-primary text-primary-foreground text-sm font-bold p-2 border border-primary text-left whitespace-nowrap;
 }
