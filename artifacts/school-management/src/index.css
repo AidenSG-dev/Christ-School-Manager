@@ -41,7 +41,7 @@
   --color-destructive-border: var(--destructive-border);
 
   --font-sans: var(--app-font-sans);
-  
+
   --radius-sm: 2px;
   --radius-md: 4px;
   --radius-lg: 4px;
@@ -50,37 +50,34 @@
 
 :root {
   --app-font-sans: 'Inter', sans-serif;
-  
+
   --background: 210 20% 98%;
   --foreground: 220 30% 10%;
-  
+
   --border: 220 20% 82%;
   --input: 220 20% 82%;
   --ring: 213 72% 44%;
-  
+
   --card: 0 0% 100%;
   --card-foreground: 220 30% 10%;
   --card-border: 220 20% 82%;
-  
+
   --popover: 0 0% 100%;
   --popover-foreground: 220 30% 10%;
   --popover-border: 220 20% 82%;
 
-  /* Lighter corporate blue — used for all blue UI (header, table headers, buttons) */
   --primary: 213 72% 44%;
   --primary-foreground: 0 0% 100%;
-  
-  /* Slightly deeper shade for sidebar/table headers */
+
   --secondary: 213 68% 37%;
   --secondary-foreground: 0 0% 100%;
-  
+
   --muted: 220 14% 96%;
   --muted-foreground: 220 10% 40%;
-  
-  /* Sky-blue accent for focus borders and highlights */
+
   --accent: 200 85% 52%;
   --accent-foreground: 0 0% 100%;
-  
+
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
 
@@ -96,14 +93,64 @@
   }
 }
 
-.excel-input {
-  @apply w-full h-full px-2 py-1 outline-none border-2 border-transparent focus:border-accent bg-transparent text-sm;
+/* Unified table style — matches the "grade ledger" aesthetic the user approved */
+.excel-header {
+  background-color: #312e81;
+  color: white;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  padding: 0.5rem 0.625rem;
+  border: 1px solid #4338ca;
+  text-align: left;
+  white-space: nowrap;
+  user-select: none;
 }
 
 .excel-cell {
-  @apply p-0 border border-border min-w-[120px];
+  padding: 0;
+  border: 1px solid #d1d5f0;
+  min-width: 140px;
 }
 
-.excel-header {
-  @apply bg-primary text-primary-foreground text-sm font-bold p-2 border border-primary text-left whitespace-nowrap;
+.excel-cell-fixed {
+  padding: 0.5rem 0.625rem;
+  border: 1px solid #d1d5f0;
+  white-space: nowrap;
+}
+
+/* Auto-expanding inline inputs — width driven by JS, height is single line */
+.excel-input {
+  display: block;
+  height: 100%;
+  min-height: 34px;
+  padding: 0.35rem 0.5rem;
+  outline: none;
+  border: 2px solid transparent;
+  background: transparent;
+  font-size: 0.875rem;
+  min-width: 120px;
+  width: 100%;
+}
+.excel-input:focus {
+  border-color: hsl(var(--accent));
+  background-color: #f0f9ff;
+}
+
+/* Number-only marks inputs — narrower */
+.marks-input {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 34px;
+  padding: 0.35rem 0.5rem;
+  outline: none;
+  border: 2px solid transparent;
+  background: transparent;
+  font-size: 0.875rem;
+  font-family: ui-monospace, monospace;
+  text-align: center;
+}
+.marks-input:focus {
+  border-color: hsl(var(--accent));
+  background-color: #f0f9ff;
 }

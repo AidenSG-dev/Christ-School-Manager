@@ -12,13 +12,14 @@ export interface Student {
   birthDate: string;
   address: string;
   parentPhone: string;
-  [key: string]: any; // For dynamic columns
+  [key: string]: any;
 }
 
 export interface GradingRule {
   grade: string;
   min: number;
   max: number;
+  color: string;
 }
 
 export interface AppStateData {

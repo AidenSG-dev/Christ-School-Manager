@@ -28,8 +28,9 @@ export const Header: React.FC<HeaderProps> = ({
         </button>
         <div className="flex items-center gap-3">
           <img src={schoolLogo} alt="Christ School Logo" className="h-12 w-12 object-contain" />
+          {/* tracking-normal keeps letters bold and compact — not stretched */}
           <h1
-            className="text-3xl font-bold tracking-widest text-white leading-none"
+            className="text-3xl font-bold tracking-normal text-white leading-none"
             style={{ fontFamily: '"Times New Roman", Times, serif' }}
           >
             CHRIST SCHOOL
@@ -59,8 +60,10 @@ export const Header: React.FC<HeaderProps> = ({
                 disabled={isDisabled}
                 onClick={() => setActiveTab(tab)}
                 className={`h-20 px-5 text-sm font-bold tracking-wide transition-colors ${
-                  isDisabled ? 'opacity-40 cursor-not-allowed text-blue-200' : 'cursor-pointer hover:bg-primary/60 text-blue-100'
-                } ${isActive ? 'border-b-[3px] border-white text-white bg-primary/40' : ''}`}
+                  isDisabled
+                    ? "opacity-40 cursor-not-allowed text-blue-200"
+                    : "cursor-pointer hover:bg-primary/60 text-blue-100"
+                } ${isActive ? "border-b-[3px] border-white text-white bg-primary/40" : ""}`}
               >
                 {tab}
               </button>
