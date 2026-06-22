@@ -309,7 +309,7 @@ export const MarksTable: React.FC<MarksTableProps> = ({ selection, academicYear,
 
         {/* ── Table 1: Numeric Marks Ledger ── */}
         <div>
-          <p className="font-bold text-[#312e81] text-[10px] tracking-widest mb-1 uppercase">Numeric Marks Ledger</p>
+          <p className="font-bold text-[#312e81] text-sm tracking-widest mb-1 uppercase">Numeric Marks Ledger</p>
           <div className="overflow-x-auto">
             <table className="border-collapse bg-white" style={{ width: "max-content" }}>
               <thead>
@@ -359,7 +359,7 @@ export const MarksTable: React.FC<MarksTableProps> = ({ selection, academicYear,
 
         {/* ── Table 2: Automated Grade Ledger (read-only) ── */}
         <div>
-          <p className="font-bold text-[#312e81] text-[10px] tracking-widest mb-1 uppercase">Automated Grade Ledger</p>
+          <p className="font-bold text-[#312e81] text-sm tracking-widest mb-1 uppercase">Automated Grade Ledger</p>
           <div className="overflow-x-auto">
             <table className="border-collapse bg-white" style={{ width: "max-content" }}>
               <thead>
