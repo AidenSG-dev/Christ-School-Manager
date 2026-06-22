@@ -202,17 +202,17 @@ export const MarksTable: React.FC<MarksTableProps> = ({ selection, academicYear,
       {/* Grading Key Header */}
       <div className="p-3 border-b border-border flex flex-col gap-2 bg-gray-50 shrink-0">
         <div className="flex items-center justify-between flex-wrap gap-2">
-          <div className="font-bold text-sm text-primary">
+          <div className="font-bold text-base text-primary">
             {selection.term} › {selection.category}
             <span className="mx-2 text-gray-300">|</span>Class: {className}
           </div>
           <div className="flex items-center gap-2">
-            <div className="text-xs font-bold text-white bg-primary px-2 py-1">
+            <div className="text-sm font-bold text-white bg-primary px-3 py-1">
               Total Marks: {totalMarks}
             </div>
             <button
               onClick={() => setShowAddGrade(v => !v)}
-              className="text-xs font-bold text-white bg-[#312e81] px-2 py-1 hover:bg-[#4338ca] transition-colors"
+              className="text-sm font-bold text-white bg-[#312e81] px-3 py-1 hover:bg-[#4338ca] transition-colors"
             >
               + Add Grade
             </button>
@@ -230,12 +230,13 @@ export const MarksTable: React.FC<MarksTableProps> = ({ selection, academicYear,
                 value={rule.grade}
                 onChange={e => updateRule(idx, "grade", e.target.value)}
                 maxLength={4}
-                className="font-bold text-white text-xs text-center outline-none"
+                className="font-bold text-white text-center outline-none"
                 style={{
                   backgroundColor: rule.color,
                   caretColor: "white",
-                  minWidth: "2rem",
-                  padding: "0.25rem 0.4rem",
+                  minWidth: "1.6rem",
+                  fontSize: "10px",
+                  padding: "0.15rem 0.3rem",
                 }}
               />
               {/* Tiny color swatch — click to open color picker */}

@@ -155,7 +155,7 @@ export const StudentTable: React.FC<StudentTableProps> = ({ activeClass, academi
         <table className="border-collapse bg-white" style={{ width: "max-content", minWidth: "100%" }}>
           <thead>
             <tr>
-              <th className="excel-header w-14 text-center sticky left-0 z-10">Rl. No</th>
+              <th className="excel-header excel-header-corner w-14 text-center sticky left-0">Rl. No</th>
               {columns.map(col => (
                 <th key={col} className="excel-header">{col}</th>
               ))}
