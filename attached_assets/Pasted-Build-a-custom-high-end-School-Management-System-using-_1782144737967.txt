@@ -1,0 +1,77 @@
+Build a custom, high-end School Management System using React and Tailwind CSS. All data must persist locally via localStorage. 
+
+
+
+Strict Design System:
+
+- Typography: Use a strict, clean, highly legible Sans-Serif font across the entire app.
+
+- Styling: BOLD, heavy, and sharp look. ABSOLUTELY NO large or fully rounded corners (maximum 4px/6px tight rounding like rounded-md). 
+
+- Interactions: No soft/fuzzy focus indicators. Active tabs, selected rows, and focused cells must use high-contrast bold states and sharp, light-blue accent border highlights.
+
+- The tables in this app must be excel style with a touch of uniqueness, the top row is dark blue with the attributes like Student Name, Student ID etc.
+
+- Maintain a strict blue theme
+
+
+
+1. Global Blue Header & Academic Year Lock:
+
+   - The top banner must be solid dark blue 
+
+- On the left is the school logo pasted and the title "Christ School" right next to it as in the image
+
+   - The right side features three main navigation tabs: "Student Info", "Marks Registry", and "Lesson Plan".
+
+   - CRITICAL GATEKEEPER: Inside this dark blue header, include an "Academic Year" dropdown menu (e.g., 2025-2026, 2026-2027). All lower application tabs and tables are strictly locked/disabled until an Academic Year is selected. Selecting a year unlocks the app and scopes all database states to that specific year. The dropdown menu is to the left of the navigation tabs as discussed earlier, those navigation tabs should not be able to work unless an academic year is registered in the dropdown menu. Once user clicks the menu - A button "Add new Academic Year" With tow years in the slashes - 1st Year- 2nd year. Ex - 2026/27. Only then it should work
+
+
+
+2. Responsive Screen Space & Sidebar (30% Width / 70% Width):
+
+   - Below the header, split the screen: 30% left sidebar, 70% main workspace.
+
+   - If columns expand horizontally or space gets tight, the sidebar must seamlessly collapse into a bold hamburger menu icon (☰) positioned next to the logo in the top blue header. Clicking it toggles the sidebar as an overlay.
+
+
+
+3. "Student Info" Tab Matrix (70% Section Layout):
+
+   - Sidebar UI: Contains a vertical list of classes and a "+ Add New Class" button. Clicking it triggers a pop-up modal with two dropdown menus: "Class" (Roman numerals I to X) and "Section" (A to D). Submitting creates the class card.
+
+   - Onboarding State: Selecting a newly created/empty class displays an entry field: "Number of students - ?". Inputting a number (e.g., 22) instantly generates that exact number of rows in the table.
+
+   - Top Control Row: Positioned directly above the main table grid. Left side displays the active text: "Class: [Selected]" and "Section: [Selected]". Right side features two utility buttons: "[+ Add New Column]" and "[+ Add New Student]". Clicking "+ Add New Student" appends a single empty row to the bottom.
+
+   - The Spreadsheet Grid: The top header row of the table must be dark blue with bold white text. The remaining rows must be solid white. 
+
+   - Default Columns: Rl. No, Student Name, Student ID Number, Birth Date, Address, and Mother or Father No. The "+ Add New Column" button must let the teacher add custom attributes dynamically across all rows.
+
+
+
+4. "Marks Registry" Tab & Cross-Intelligence Dual-Table Engine:
+
+   - Nested Sidebar Tree: Organize this sidebar into expandable accordions for "Term 1" and "Term 2". Under each Term, nest three categories: "Class Tests", "FA Tests", and "Term Tests". Each category lists its assigned classes and an "+ Add Class to Category" utility button.
+
+   - Cross-Intelligence: When a class (e.g., VIII B) is selected within any assessment category, the app must auto-populate Column 1 (Rl No) and Column 2 (Student Name) by pulling that exact data directly from the Student Info tab. Show a warning if the student roster doesn't exist yet.
+
+   - Setup Matrix: Upon selecting a class, prompt the teacher: "Number of tests conducted?". If she enters 8, dynamically spawn 8 test columns across two separate, aligned tables stacked cleanly in the 70% workspace.
+
+   - Table 1 (Numeric Marks Ledger): Dark blue headers. Features editable cell inputs for entering numeric marks (0-100) for Test 1 through Test X, and automatically calculates a real-time "Average (%)" column at the end.
+
+   - Table 2 (Automated Grade Ledger): Dark navy/purple headers. This table is completely read-only. 
+
+   - Grading Key Engine: Positioned right above the tables, a dynamic input block lets the teacher configure custom grade scales (e.g., A = 70-90). Table 2 must continuously read numeric values from Table 1, process them through this grading key, and instantly output color-coded alpha-grade badges in real-time.
+
+
+
+5. Fluent Excel-Style Keyboard Navigation Engine:
+
+   - All text and numeric cell inputs must act like a native spreadsheet. Implement custom global keyboard event listeners:
+
+     * ArrowRight (→) or Tab instantly moves the typing line/caret focus to the next cell to the right.
+
+     * ArrowLeft (←) or Shift+Tab instantly moves focus to the previous cell to the left.
+
+     * ArrowDown (↓) and ArrowUp (↑) shift focus directly to the cell in the input row below or above respectively.

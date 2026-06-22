@@ -1,0 +1,77 @@
+Build a custom, high-end School Management System using React and Tailwind CSS. All application states and tables must dynamically save to and persist from browser localStorage. 
+
+
+
+### STRICT DESIGN SYSTEM (BOLD, SHARP, NO AGGRESSIVE ROUNDING)
+
+- Typography: Use a strict, clean, highly legible Sans-Serif font across the entire application.
+
+- Styling & Aesthetic: The app must feel bold, robust, and authoritative—like a powerful enterprise matrix tool, not a generic, soft landing page template.
+
+- Borders & Corners: ABSOLUTELY NO large or fully rounded corners (maximum 4px/6px tight rounding like rounded-md on cards and buttons). Tables must have sharp, flat edges.
+
+- Interaction Highlights: Active navigation tabs, active table rows, or focused inputs must not use soft/fuzzy shadows. Highlight selected states strictly using bold typography, background shifts, and clean, sharp, light-blue accent border highlights.
+
+
+
+### 1. GLOBAL BLUE HEADER BAR & ACADEMIC YEAR LOCK
+
+- Header Layout: A solid, fixed dark blue banner spans the top of the app. Left side features the school logo placeholder and the title "Christ School". 
+
+- Right Side Navigation: Contains three flat, interactive main navigation tabs: "Student Info", "Marks Registry", and "Lesson Plan".
+
+- CRITICAL ACADEMIC YEAR GATEKEEPER: On the left side of the navigation tabs , place a mandatory dropdown menu for selecting the "Academic Year" (e.g., 2025-2026, 2026-2027). All lower tabs, menus, and tables in the app are strictly locked and disabled until an Academic Year is chosen from this dropdown. Selecting a year unlocks the interface and scopes all storage data to that specific year.
+
+
+
+### 2. CORE WORKSPACE SPLIT & RESPONSIVE COLLAPSE
+
+- Workspace Division: Below the header, the app is split into a 30% width left sidebar menu and a 70% width main content table workspace.
+
+- Responsive Collapse: If horizontal table columns expand or screen space gets tight, the 30% left sidebar must automatically collapse into a bold hamburger menu icon (☰) positioned inside the top blue header bar next to the school logo. Clicking this hamburger icon toggles the sidebar menu as a sliding overlay over the workspace.
+
+
+
+### 3. "STUDENT INFO" TAB MATRIX (70% WORKSPACE LAYOUT)
+
+- Sidebar Menu UI: Displays a vertical list of current classes and a prominent "+ Add New Class" button. Clicking this button triggers a pop-up modal with two dropdown selections: "Class" (Roman numerals I through X) and "Section" (A through D). Submitting appends the new class card to the list.
+
+- Roster Matrix Control Header: Directly above the table grid, left-align the active metadata text: "Class: [Selected Roman Numeral}" and "Section: [Selected Letter]". On the right side, place two utility buttons: "[+ Add New Column]" and "[+ Add New Student]".
+
+- Onboarding Grid State: When a newly created or empty class is selected, the 70% main section must hide the table and show a direct prompt field: "Number of students - ?". Inputting a number (e.g., 22) instantly batch-generates that exact number of empty table rows.
+
+- Table Layout: Strict Excel-style grid. The top header row must be dark blue with bold white text. The remaining data entry rows must be flat white.
+
+- Columns & Custom Attributes: The table contains default columns: Rl. No, Student Name, Student ID Number, Birth Date, Address, and Mother or Father No. Clicking the "[+ Add New Column]" button must prompt for a header title and dynamically append that column across all rows. Clicking "[+ Add New Student]" must instantly append a single empty white row to the bottom of the grid.
+
+
+
+### 4. "MARKS REGISTRY" TAB & CROSS-INTELLIGENCE ASSESSMENT ENGINE
+
+- Multi-Level Nested Sidebar Tree: Organize this sidebar with expandable accordion panels for "Term 1" and "Term 2". Nest three distinct categories under each Term: "Class Tests", "FA Tests", and "Term Tests". Each category displays its assigned classes and a localized "+ Add Class to Category" button.
+
+- Cross-Intelligence Data Hydration: When a class (e.g., VIII B) is selected within any assessment category, the app must automatically pull Column 1 (Rl No) and Column 2 (Student Name) directly from that class's roster inside the Student Info tab. If no data exists yet for that class, halt and show a bold warning banner.
+
+- Dynamic Assessment Set-up: Upon picking a populated class, a prompt must ask: "Number of tests conducted?". Inputting a number (e.g., 8) dynamically spawns 8 sequential test columns across two separate, aligned tables stacked cleanly in the 70% workspace.
+
+- Table 1 (Numeric Marks Ledger): Styled with dark blue headers. Features editable numeric inputs (0-100) for Test 1 through Test X, and automatically computes a live, real-time "Average (%)" column at the end.
+
+- Table 2 (Automated Grade Ledger): Positioned directly below or side-by-side with dark navy/purple headers. This entire table is strictly read-only.
+
+- Grading Key Engine: Positioned above the tables, an interactive configuration block lets the teacher input dynamic grade rules (e.g., A = 70-90). Table 2 must continuously read numeric cell inputs from Table 1, process them against the grading key rules, and instantly output color-coded alpha-grade badges in real-time.
+
+
+
+### 5. FLUENT EXCEL-STYLE KEYBOARD NAVIGATION ENGINE
+
+- All cell entries across all tables (Student Info and Marks Registry) must act as completely open, inline editable input fields.
+
+- Program custom global keyboard event listeners on these inputs so the teacher can blitz through grading without touching the mouse:
+
+  * Pressing ArrowRight (→) or Tab instantly moves the text cursor/caret focus to the input box directly to its right.
+
+  * Pressing ArrowLeft (←) or Shift+Tab instantly moves focus to the previous input box to its left.
+
+  * Pressing ArrowDown (↓) moves focus to the corresponding input box in the row directly below.
+
+  * Pressing ArrowUp (↑) moves focus to the corresponding input box in the row directly above.
