@@ -61,7 +61,6 @@ export const LessonPlan: React.FC<LessonPlanProps> = ({ sidebarOpen, setSidebarO
       <div className="flex-1 h-full flex flex-col overflow-hidden">
         {activeClass ? (
           <div className="flex flex-col h-full overflow-hidden bg-white">
-            {/* Control row — h-14 matches sidebar */}
             <div className="h-14 px-4 border-b border-border bg-gray-50 flex items-center shrink-0">
               <div className="font-bold text-base text-primary">
                 Weekly Planner
@@ -70,12 +69,11 @@ export const LessonPlan: React.FC<LessonPlanProps> = ({ sidebarOpen, setSidebarO
               </div>
             </div>
 
-            {/* Table — same unified style as grade ledger */}
             <div className="flex-1 overflow-auto p-4">
               <table className="border-collapse bg-white" style={{ width: "max-content", minWidth: "100%" }}>
                 <thead>
                   <tr>
-                    <th className="excel-header w-24 text-center sticky left-0 z-10">Period</th>
+                    <th className="excel-header excel-header-corner w-24 text-center sticky left-0">Period</th>
                     {days.map(day => (
                       <th key={day} className="excel-header w-48 text-center">{day}</th>
                     ))}
@@ -84,16 +82,16 @@ export const LessonPlan: React.FC<LessonPlanProps> = ({ sidebarOpen, setSidebarO
                 <tbody>
                   {periods.map(period => (
                     <tr key={period} className="hover:bg-indigo-50/20">
-                      <td className="excel-cell-fixed bg-gray-50 text-center font-bold text-[#312e81] sticky left-0 z-10 w-24 h-16">
+                      <td className="excel-cell-fixed bg-gray-50 text-center font-bold text-[#312e81] sticky left-0 z-10 w-24 h-14">
                         Period {period}
                       </td>
                       {days.map(day => {
                         const val = lessonData[`${day}_${period}`] || "";
                         return (
-                          <td key={day} className="excel-cell w-48 h-16">
+                          <td key={day} className="border border-[#d1d5f0] w-48 h-14 p-0">
                             <textarea
-                              className="absolute inset-0 w-full h-full p-2 outline-none border-2 border-transparent focus:border-accent resize-none text-sm leading-tight bg-transparent"
-                              style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
+                              className="w-full h-full p-2 outline-none resize-none text-sm leading-tight bg-transparent block"
+                              style={{ minHeight: "56px" }}
                               value={val}
                               onChange={e => updateLesson(day, period, e.target.value)}
                               placeholder="Enter topic..."

@@ -50,50 +50,36 @@
 
 :root {
   --app-font-sans: 'Inter', sans-serif;
-
   --background: 210 20% 98%;
   --foreground: 220 30% 10%;
-
   --border: 220 20% 82%;
   --input: 220 20% 82%;
   --ring: 213 72% 44%;
-
   --card: 0 0% 100%;
   --card-foreground: 220 30% 10%;
   --card-border: 220 20% 82%;
-
   --popover: 0 0% 100%;
   --popover-foreground: 220 30% 10%;
   --popover-border: 220 20% 82%;
-
   --primary: 213 72% 44%;
   --primary-foreground: 0 0% 100%;
-
   --secondary: 213 68% 37%;
   --secondary-foreground: 0 0% 100%;
-
   --muted: 220 14% 96%;
   --muted-foreground: 220 10% 40%;
-
   --accent: 200 85% 52%;
   --accent-foreground: 0 0% 100%;
-
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
-
   --radius: 0px;
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply font-sans bg-background text-foreground;
-  }
+  * { @apply border-border; }
+  body { @apply font-sans bg-background text-foreground; }
 }
 
-/* Unified table style — matches the "grade ledger" aesthetic the user approved */
+/* Unified table header — deep indigo (grade ledger style) */
 .excel-header {
   background-color: #312e81;
   color: white;
@@ -104,53 +90,67 @@
   text-align: left;
   white-space: nowrap;
   user-select: none;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
+/* Corner + name headers need higher z so they don't slide under test-col headers */
+.excel-header-corner {
+  z-index: 30 !important;
+}
+.excel-header-name {
+  z-index: 20 !important;
+}
+
+/* Data cells */
 .excel-cell {
   padding: 0;
   border: 1px solid #d1d5f0;
-  min-width: 140px;
+  min-width: 150px;
 }
-
 .excel-cell-fixed {
-  padding: 0.5rem 0.625rem;
+  padding: 0.4rem 0.6rem;
   border: 1px solid #d1d5f0;
   white-space: nowrap;
 }
 
-/* Auto-expanding inline inputs — width driven by JS, height is single line */
+/* Free-text input — NO visible focus ring, just a barely-there bg tint */
 .excel-input {
   display: block;
-  height: 100%;
+  width: 100%;
   min-height: 34px;
   padding: 0.35rem 0.5rem;
   outline: none;
-  border: 2px solid transparent;
+  border: none;
   background: transparent;
   font-size: 0.875rem;
-  min-width: 120px;
-  width: 100%;
 }
 .excel-input:focus {
-  border-color: hsl(var(--accent));
-  background-color: #f0f9ff;
+  background-color: #f5f7ff;
 }
 
-/* Number-only marks inputs — narrower */
+/* Marks input — text type, centered, monospace, NO arrow-key stepping */
 .marks-input {
   display: block;
   width: 100%;
-  height: 100%;
   min-height: 34px;
   padding: 0.35rem 0.5rem;
   outline: none;
-  border: 2px solid transparent;
+  border: none;
   background: transparent;
   font-size: 0.875rem;
   font-family: ui-monospace, monospace;
   text-align: center;
 }
 .marks-input:focus {
-  border-color: hsl(var(--accent));
-  background-color: #f0f9ff;
+  background-color: #f5f7ff;
 }
+
+/* Hide number-input spinners globally to avoid confusion */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] { -moz-appearance: textfield; }
