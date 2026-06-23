@@ -1,6 +1,6 @@
 import React from "react";
 import schoolLogo from "@assets/image_1782145199279.png";
-import { Menu } from "lucide-react";
+import { Menu, LogOut } from "lucide-react";
 
 interface HeaderProps {
   academicYear: string | null;
@@ -8,6 +8,9 @@ interface HeaderProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
   toggleSidebar: () => void;
+  teacherName: string;
+  subject: string;
+  onSignOut: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -15,43 +18,60 @@ export const Header: React.FC<HeaderProps> = ({
   setAcademicYear,
   activeTab,
   setActiveTab,
-  toggleSidebar
+  toggleSidebar,
+  teacherName,
+  subject,
+  onSignOut,
 }) => {
   const years = ["Select Year", "2024-2025", "2025-2026", "2026-2027", "2027-2028"];
   const tabs = ["Student Info", "Marks Registry", "Lesson Plan"];
 
   return (
-    <header className="bg-secondary text-primary-foreground h-20 flex items-center px-5 shrink-0 justify-between gap-6">
-      <div className="flex items-center gap-4">
-        <button className="md:hidden p-1" onClick={toggleSidebar}>
+    <header className="bg-secondary text-primary-foreground h-20 flex items-center px-5 shrink-0 justify-between gap-4">
+      {/* Left: logo + title + teacher info */}
+      <div className="flex items-center gap-4 min-w-0">
+        <button className="md:hidden p-1 shrink-0" onClick={toggleSidebar}>
           <Menu className="w-6 h-6 text-white" />
         </button>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 shrink-0">
           <img src={schoolLogo} alt="Christ School Logo" className="h-12 w-12 object-contain" />
-          {/* tracking-normal keeps letters bold and compact — not stretched */}
           <h1
-            className="text-3xl font-bold tracking-normal text-white leading-none"
+            className="text-3xl font-bold tracking-normal text-white leading-none hidden sm:block"
             style={{ fontFamily: '"Times New Roman", Times, serif' }}
           >
             CHRIST SCHOOL
           </h1>
         </div>
+        {/* Teacher info pill */}
+        <div className="hidden md:flex flex-col justify-center ml-2 pl-3 border-l border-blue-300/40 min-w-0">
+          <span className="text-white font-bold text-sm leading-tight truncate">{teacherName}</span>
+          <span className="text-blue-200 text-xs leading-tight truncate">{subject}</span>
+        </div>
       </div>
 
-      <div className="flex items-center gap-8">
+      {/* Right: year selector + tabs + logout */}
+      <div className="flex items-center gap-4 shrink-0">
         <div className="flex items-center gap-2">
-          <label className="text-sm font-semibold text-blue-100 whitespace-nowrap">Academic Year</label>
+          <label className="text-sm font-semibold text-blue-100 whitespace-nowrap hidden sm:block">
+            Academic Year
+          </label>
           <select
             className="bg-primary border border-blue-300/40 text-white text-sm px-3 py-1.5 outline-none focus:border-accent cursor-pointer"
             value={academicYear || "Select Year"}
-            onChange={(e) => setAcademicYear(e.target.value === "Select Year" ? "" : e.target.value)}
+            onChange={(e) =>
+              setAcademicYear(e.target.value === "Select Year" ? "" : e.target.value)
+            }
           >
-            {years.map(y => <option key={y} value={y}>{y}</option>)}
+            {years.map((y) => (
+              <option key={y} value={y}>
+                {y}
+              </option>
+            ))}
           </select>
         </div>
 
         <nav className="hidden md:flex items-center gap-1 h-20">
-          {tabs.map(tab => {
+          {tabs.map((tab) => {
             const isActive = activeTab === tab;
             const isDisabled = !academicYear;
             return (
@@ -70,6 +90,16 @@ export const Header: React.FC<HeaderProps> = ({
             );
           })}
         </nav>
+
+        {/* Logout */}
+        <button
+          onClick={onSignOut}
+          title="Sign out"
+          className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white text-xs font-bold px-3 py-2 transition-colors border border-white/20"
+        >
+          <LogOut className="w-3.5 h-3.5" />
+          <span className="hidden sm:inline">Logout</span>
+        </button>
       </div>
     </header>
   );
