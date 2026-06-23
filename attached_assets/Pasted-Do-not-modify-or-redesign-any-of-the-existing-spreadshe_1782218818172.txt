@@ -1,0 +1,23 @@
+Do not modify or redesign any of the existing spreadsheet styles, layouts, or table keyboard navigation logic. The core application frontend is complete. Your task is to implement Supabase Authentication, an onboarding flow, and connect the app's existing state logic to a secure Supabase PostgreSQL backend.
+
+1. Authentication Layer (The Gatekeeper):
+   - Create a clean, sharp Login Screen that serves as the entry point of the application. The main app must be entirely inaccessible until a user is successfully authenticated.
+   - Implement two login methods using Supabase Auth:
+     * Google Sign-In (OAuth)
+     * Email & Password Sign-up/Log-in (Create Account with a secure password).
+   - The design must match the existing sharp, bold, low-rounding aesthetic with light blue focus highlights.
+
+2. Teacher Profile Onboarding Flow:
+   - Immediately after a new user logs in for the first time, intercept them with a one-time onboarding screen.
+   - This screen must ask for two mandatory fields: "Teacher's Name" and "Subject" (e.g., Computer Science).
+   - Submitting this form links the profile data to their unique Supabase User ID (`auth.uid()`), saves it to a 'teachers' table, and permanently unlocks the dashboard. On future logins, bypass this screen automatically.
+
+3. Database Row-Level Security (RLS) & Multi-Tenant Isolation:
+   - Migrate the existing tables (academic_years, classes, students, assessments, marks_entries) to Supabase.
+   - Introduce a 'teachers' profile table: id (UUID, references auth.users), teacher_name (VARCHAR), and subject (VARCHAR).
+   - CRITICAL SECURITY STEP: Alter every table in the schema to include a `teacher_id UUID REFERENCES teachers(id) ON DELETE CASCADE` column.
+   - Update all data-fetching and insertion queries across the app to filter by the logged-in user's ID (`auth.uid()`). A teacher must strictly only see and modify their own academic years, classes, students, and marks.
+
+4. State & UI Adaptation:
+   - Display the logged-in Teacher's Name and Subject prominently in the top dark blue header banner next to the school logo. Include a clean, bold "Logout" utility button next to it.
+   - Wrap data fetching operations with your existing loading states while the Supabase client handles authentication checks and relational queries.
